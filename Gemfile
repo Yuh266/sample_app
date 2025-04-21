@@ -8,8 +8,7 @@ gem "bootstrap-sass"
 
 # -----------------------
 gem "sassc-rails", "2.1.2"
-
-
+gem "bcrypt", "3.1.18"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
