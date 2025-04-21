@@ -12,8 +12,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      reset_session
+      log_in @user
       # Nếu tạo người dùng thành công, chuyển hướng đến trang cá nhân của người dùng.
-      flash[:success] = "Account created successfully!"
+      flash[:success] = "Chào mừng bạn đến với Sample App!"
       redirect_to @user
     else
       # Nếu tạo người dùng thất bại (ví dụ: lỗi nhập liệu), hiển thị lại trang đăng ký với các lỗi.
