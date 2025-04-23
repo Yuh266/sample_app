@@ -1,0 +1,14 @@
+<% provide(:title, 'All users') %>
+<div class="container mt-5">
+  <h1 class="my-4 text-center">All Users</h1>
+
+  <% if @users.any? %>
+    <%= will_paginate %>
+    <ul class="list-group">
+        <%= render @users %>
+    </ul>
+    <%= will_paginate %>
+  <% else %>
+    <p class="text-center text-muted">No users found.</p>
+  <% end %>
+</div>

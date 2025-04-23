@@ -1,0 +1,9 @@
+ <li style="height: 100px;" class="list-group-item d-flex align-items-center">
+    <%= gravatar_for user, size: 50, class: "rounded-circle me-3" %>
+    <%= link_to user.name, user, class: "text-decoration-none fw-bold" %>
+    <% if current_user.admin? && !current_user?(user) %>
+|       <%= link_to "delete", user, data: { "turbo-method": :delete, turbo_confirm: "You sure?" } %>
+    <% end %>
+</li>
+
+
