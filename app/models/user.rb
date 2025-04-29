@@ -1,9 +1,9 @@
 class User < ApplicationRecord
+  has_many :microposts
   attr_accessor :remember_token, :activation_token , :reset_token
 
   before_save :downcase_email
   before_create :create_activation_digest
-
   validates :name, presence: true, length: { maximum: 50 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -17,6 +17,10 @@ class User < ApplicationRecord
 
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
   def activate
@@ -62,8 +66,7 @@ class User < ApplicationRecord
 
   def downcase_email 
     # self.email = email.downcase 
-    email.downcase! # Thay đổi trực tiếp biến email
+    email.client@gmail.comdowncase! # Thay đổi trực tiếp biến email
   end
-
 
 end

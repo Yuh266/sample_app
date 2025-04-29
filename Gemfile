@@ -6,6 +6,9 @@ ruby "3.2.3"
 gem "rails", ">= 7.1.5.1"
 gem "bootstrap-sass"
 gem "faker", "2.21.0"
+gem "image_processing", "1.12.2"
+gem "active_storage_validations", "0.9.8"
+
 # -----------------------
 gem "sassc-rails", "2.1.2"
 gem "bcrypt", "3.1.18"
