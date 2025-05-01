@@ -27,9 +27,17 @@ users = User.order(:created_at).take(6)
   users.each { |user| user.microposts.create!(content: content) }
 end
 
+# Tạo quan hệ following/followers mẫu
+users     = User.all
+user      = users.first               # User đầu tiên (Example User)
+following = users[2..50]              # Các user thứ 3–51
+followers = users[3..40]              # Các user thứ 4–41
 
+# User đầu tiên theo dõi users 3→51
+following.each { |followed| user.follow(followed) }
 
-
+# Users 4→41 theo dõi lại user đầu tiên
+followers.each { |follower| follower.follow(user) }
 
 
 

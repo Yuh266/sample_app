@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   get '/contact' ,to: "static_pages#contact"
   get '/signup' ,to: "users#new"
 
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   # get 'microposts', to: "static_pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
@@ -23,6 +28,7 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
