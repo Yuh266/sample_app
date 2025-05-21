@@ -5,8 +5,7 @@ class MicropostsController < ApplicationController
   def create 
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
-    # @microposts = current_user.microposts.order(created_at: :desc).paginate(page: params[:page]) 
-
+    
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_url

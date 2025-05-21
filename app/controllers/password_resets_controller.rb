@@ -21,17 +21,18 @@ class PasswordResetsController < ApplicationController
   def edit
   end
   def update
-    if params[:user][:password].empty? # Case 3
+    if params[:user][:password].empty?
       @user.errors.add(:password, "can't be empty")
       render 'edit', status: :unprocessable_entity
-    elsif @user.update(user_params) # Case 4
+    elsif @user.update(user_params)
       log_in @user
       @user.update_attribute(:reset_digest, nil)
       flash[:success] = "Password has been reset."
       redirect_to @user
     else
-      render 'edit', status: :unprocessable_entity # Case 2
+      render 'edit', status: :unprocessable_entity
     end
+    
   end
 
   private
@@ -45,15 +46,14 @@ class PasswordResetsController < ApplicationController
   end
   # Confirms a valid user.
   def valid_user
-    unless (@user && @user.activated? &&
-      @user.authenticated?(:reset, params[:id]))
+    unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
       redirect_to root_url
     end
   end
   # Checks expiration of reset token.
   def check_expiration
     if @user.password_reset_expired?
-      flash[:danger] = "Password reset has expired."
+      flash[:danger] = "Password reset has expired." # Liên kết đặt lại mật khẩu đã hết hạn.
       redirect_to new_password_reset_url
     end
   end

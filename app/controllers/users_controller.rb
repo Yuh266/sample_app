@@ -3,30 +3,21 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   def index
-    # @users = User.paginate(page: params[:page], per_page: 10)
     @users = User.where(activated: true).paginate(page: params[:page])
   end
-
+  
   def new
-    # debugger  
     @user = User.new
-
   end
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
     redirect_to root_url and return unless @user.activated?
-    # debugger
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      # reset_session
-      # log_in @user
-      # # Nếu tạo người dùng thành công, chuyển hướng đến trang cá nhân của người dùng.
-      # flash[:success] = "Chào mừng bạn đến với Sample App!"
-      # redirect_to @user
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
@@ -38,9 +29,8 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-
   end
-
+  
   def update 
     @user = User.find(params[:id])
     if @user.update(user_params)
@@ -62,13 +52,13 @@ class UsersController < ApplicationController
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
+    @users = @user.following.paginate(page: params[:page]) 
     render 'show_follow', status: :unprocessable_entity
   end
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
+    @users = @user.followers.paginate(page: params[:page]) 
     render 'show_follow', status: :unprocessable_entity
   end
 
@@ -88,3 +78,6 @@ class UsersController < ApplicationController
   end
 
 end
+
+
+
