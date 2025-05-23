@@ -1,0 +1,17 @@
+<% if comment && comment.micropost %>
+  <%= form_with(model: [comment.micropost, comment.replies.build], id: "comment_child_form_#{comment.id}", local: true) do |f| %>
+    <%= f.hidden_field :parent_id, value: comment.id %>
+    <div class="form-group">
+      <%= f.text_area :content, placeholder: "Write a reply...", class: "form-control border border-gray-300 rounded-md p-2 w-full" %>
+    </div>
+    <span>
+      <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+    </span>
+    <%= f.submit "Reply", class: "btn btn-primary btn-sm bg-blue-500 text-white px-4 py-2 rounded-md" %>
+  <% end %>
+<% end %>
+
+
+
+
+

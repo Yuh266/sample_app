@@ -6,25 +6,32 @@ class CommentsController < ApplicationController
     @comment = @micropost.comments.build(comment_params)
     @comment.user = current_user
     @comment.parent_id = params[:parent_id] if params[:parent_id] # Gán parent_id nếu có
-    @comment.image.attach(params[:comment][:image]) if params[:comment][:image]
+    @comment.image.attach(params[:comment][:image]) if params[:comment][:image].present?
 
     if @comment.save
-      flash[:success] = "Comment added!"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to micropost_path(@micropost), notice: "Comment added!" }
+      end
     else
-      flash[:danger] = "Comment could not be added."
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "comments/form", locals: { micropost: @micropost, comment: @comment }) }
+        format.html { redirect_to micropost_path(@micropost), alert: "Comment could not be added." }
+      end
     end
-    redirect_to micropost_path(@micropost)
   end
 
   def destroy
     @comment = Comment.find(params[:id])
     if @comment.user == current_user || current_user.admin?
       @comment.destroy
-      flash[:success] = "Comment deleted"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to micropost_path(@comment.micropost), notice: "Comment deleted" }
+      end
     else
-      flash[:danger] = "You are not authorized to delete this comment."
+      redirect_to micropost_path(@comment.micropost), alert: "You are not authorized to delete this comment."
     end
-    redirect_to micropost_path(@comment.micropost)
   end
 
   private

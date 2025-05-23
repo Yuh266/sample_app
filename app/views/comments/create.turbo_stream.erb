@@ -1,0 +1,15 @@
+<% if @comment.parent_id.nil? %>
+  <!-- Thêm bình luận cha -->
+  <%= turbo_stream.append "comments_#{@micropost.id}", partial: "comments/comment", locals: { comment: @comment } %>
+  <%= turbo_stream.replace "comment_form_#{@micropost.id}", partial: "comments/form", locals: { micropost: @micropost, comment: @micropost.comments.build } %>
+<% else %>
+  <!-- Thêm bình luận con -->
+  <%= turbo_stream.append "replies_#{@comment.big_parent_id}", partial: "comments/reply", locals: { reply: @comment } %>
+  <%= turbo_stream.replace "comment_child_form_#{@comment.parent_id}" do %>
+    <%= render partial: "comments/form_child", locals: { comment: @comment.parent } %>
+  <% end %> 
+  <%= turbo_stream.update "number_comment_#{@comment.big_parent_id}" do %>
+    <%= @comment.parent.big_replies.count %>
+  <% end %>
+<% end %>
+

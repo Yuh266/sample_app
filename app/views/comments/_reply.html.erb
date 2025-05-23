@@ -1,0 +1,24 @@
+<div id="reply_<%= reply.id %>" class="reply">
+    <% if reply.parent_id.present? %>
+    <span class="text-gray-500">(in reply to <%= link_to reply.parent.user.name, reply.parent.user %>)</span>
+    <% end %>
+    <strong><%= link_to reply.user.name, reply.user %></strong> |
+    <% if current_user?(reply.user) || current_user.admin? %>
+    <%= link_to "delete", [reply.micropost, reply], data: { "turbo-method": :delete, turbo_confirm: "You sure?" } %>
+    <% end %>
+    <p><%= reply.content %></p>
+    <% if reply.image.attached? %>
+    <%= image_tag reply.image.variant(:display) %>
+    <% end %>
+
+    <!-- Nút Reply -->
+    <div x-data="{ open: false }">
+        <button @click="open = !open" class="btn btn-link btn-sm text-blue-500">Reply</button>
+
+        <!-- Form trả lời bình luận -->
+        <div x-show="open" class="mt-2">
+            <%= render partial: "comments/form_child", locals: { comment: reply } %>
+        </div>
+        
+    </div>
+</div>
