@@ -82,8 +82,19 @@ Rails.application.configure do
   
     # Dành cho khi phát triển trên localhost:
     # config.action_mailer.default_url_options = { host: host, protocol: 'http' }
-  
-    config.action_mailer.delivery_method = :letter_opener # hoặc :smtp nếu đang test gửi mail thật
-    config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+    config.active_job.queue_adapter = :async
 
+    config.action_mailer.raise_delivery_errors = true # Hiển thị lỗi nếu email không gửi được
+    config.action_mailer.perform_deliveries = true    # Đảm bảo email thực sự được gửi
+    config.action_mailer.delivery_method = :smtp # :letter_opener hoặc :smtp nếu đang test gửi mail thật
+    config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'localhost', # Thay bằng domain của bạn
+      user_name:            'nhuy04625@gmail.com', # Thay bằng email Gmail của bạn
+      password:             'vahtgflglzmiutgm', # Thay bằng mật khẩu Gmail hoặc App Password
+      authentication:       'plain',
+      enable_starttls_auto: true
+    }
 end

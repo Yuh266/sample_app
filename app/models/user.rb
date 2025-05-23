@@ -1,10 +1,12 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
-                                  dependent: :destroy
-  has_many :passive_relationships, class_name: "Relationship",
-                                   foreign_key: "followed_id",
+                                  dependent: :destroy  
+  has_many :passive_relationships, class_name: "Relationship",    
+                                   foreign_key: "followed_id",   
                                    dependent: :destroy                          
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
@@ -22,15 +24,18 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 } , allow_nil: true
   has_secure_password
   
-  
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
   end
    # Gửi email kích hoạt
   def send_activation_email
-    UserMailer.account_activation(self).deliver_now
+    # UserMailer.account_activation(self).deliver_now 
+    MailerJob.perform_later('UserMailer', 'account_activation', self, self.activation_token) 
   end
- 
+  # Sends password reset email. 
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
   # Lưu remember_token và remember_digest vào cookie & DB
   def remember
     self.remember_token = User.new_token
@@ -46,20 +51,12 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  def authenticated?(remember_token)
-    return false if digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
-  end
-
   # Sets the password reset attributes.
   def create_reset_digest
     self.reset_token = User.new_token
     update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
-  # Sends password reset email. 
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
+
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
@@ -75,6 +72,7 @@ class User < ApplicationRecord
   def feed
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
+
     Micropost.where("user_id IN (#{following_ids})
                      OR user_id = :user_id", user_id: id)
              .includes(:user, image_attachment: :blob)
@@ -86,7 +84,7 @@ class User < ApplicationRecord
   
   class << self
     def new_token
-      SecureRandom.urlsafe_base64
+      SecureRandom.urlsafe_base64 
     end
     # Băm token (dùng để lưu vào DB) 
     def digest(string) 
@@ -105,9 +103,8 @@ class User < ApplicationRecord
   def downcase_email 
     self.email.downcase
   end
-
-
-
 end
+
+
 
 

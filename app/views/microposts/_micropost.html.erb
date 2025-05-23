@@ -14,4 +14,19 @@
         <% end %> 
     </span>
 </li>
+<div class="comments">
+    <h5>Comments</h5>
+    <%= render micropost.comments %>
+    <!-- Form thêm bình luận -->
+    <%= form_with(model: [micropost, micropost.comments.build], local: true) do |f| %>
+        <div class="form-group">
+        <%= f.text_area :content, placeholder: "Add a comment...", class: "form-control" %>
+        </div>
+        <span>
+            <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+        </span>
+        <%= f.submit "Comment", class: "btn btn-primary btn-sm" %>
+    <% end %>
+</div>
+
 

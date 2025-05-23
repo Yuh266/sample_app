@@ -16,11 +16,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
-      redirect_to root_url
+    @user = User.new(user_params) 
+    if @user.save 
+      @user.send_activation_email 
+      flash[:info] = "Please check your email to activate your account." 
+      redirect_to root_url 
     else
       # Nếu tạo người dùng thất bại (ví dụ: lỗi nhập liệu), hiển thị lại trang đăng ký với các lỗi.
       render 'new', status: :unprocessable_entity
@@ -36,26 +36,27 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       # Xử lý khi cập nhật thành công
       flash[:success] = "Profile updated"
-      redirect_to @user
+      # redirect_to @user
+      redirect_to edit_user_path(@user), status: :see_other
     else
       # Nếu thông tin không hợp lệ, trả về trang chỉnh sửa với thông báo lỗi
       render 'edit', status: :unprocessable_entity
     end
-
   end
 
-  def destroy
+  def destroy 
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url, status: :see_other
   end
-  def following
+  def following 
     @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page]) 
+    # Rails.logger.debug { "DEBUG: @users = #{@users.inspect}" } # Ghi log
     render 'show_follow', status: :unprocessable_entity
-  end
-  def followers
+  end 
+  def followers 
     @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page]) 
@@ -78,6 +79,5 @@ class UsersController < ApplicationController
   end
 
 end
-
 
 

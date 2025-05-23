@@ -1,0 +1,84 @@
+<% if comment.parent_id.nil? %>
+
+<div class="comment">
+    <strong><%= link_to comment.user.name, comment.user %></strong> |
+    <% if current_user?(comment.user) || current_user.admin? %>
+    <%= link_to "delete", [comment.micropost, comment], data: {"turbo-method": :delete, turbo_confirm: "You sure?"} %>
+    <% end %>
+    <p><%= comment.content %></p>
+    <% if comment.image.attached? %>
+    <%= image_tag comment.image.variant(:display) %>
+    <% end %>
+
+    <!-- Nút Reply -->
+    <div x-data="{ open: false }">
+        <button @click="open = !open" class="btn btn-link btn-sm text-blue-500">Reply</button>
+
+        <!-- Form trả lời bình luận -->
+        <div x-show="open" class="mt-2">
+            <%= form_with(model: [comment.micropost, comment.replies.build], local: true) do |f| %>
+            <%= f.hidden_field :parent_id, value: comment.id %>
+            <div class="form-group">
+                <%= f.text_area :content, placeholder: "Write a reply...", class: "form-control border border-gray-300 rounded-md p-2 w-full" %>
+            </div>
+            <span>
+                <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+            </span>
+            <%= f.submit "Reply", class: "btn btn-primary btn-sm bg-blue-500 text-white px-4 py-2 rounded-md" %>
+            <% end %>
+        </div>
+    </div>
+    <!-- Hiển thị các bình luận con -->
+    <% if comment.replies.any? %>
+    <%
+=begin%>
+    <p><%= debug comment.replies %></p>
+    <%
+=end%>
+
+    <div x-data="{ showReplies: false }" class="replies mt-2">
+        <button @click="showReplies = !showReplies" class="btn btn-link btn-sm text-blue-500">
+            <span x-show="!showReplies">Xem thêm bình luận (<%= comment.replies.count %>)</span>
+            <span x-show="showReplies">Ẩn bình luận</span>
+        </button>
+        <div x-show="showReplies" class="ml-4 border-l-2 border-gray-300 pl-4">
+            <% comment.replies.each do |reply| %>
+            <% if reply.id.nil? %>
+            <% break %>
+            <% end %>
+            <% if reply.parent_id.present? %>
+            <span class="text-gray-500">(in reply to <%= link_to reply.parent.user.name, reply.parent.user %>)</span>
+            <% end %>
+            <strong><%= link_to reply.user.name, reply.user %></strong> |
+            <% if current_user?(reply.user) || current_user.admin? %>
+            <%= link_to "delete", [reply.micropost, reply], data: {"turbo-method": :delete, turbo_confirm: "You sure?"} %>
+            <% end %>
+                <p><%= reply.content %></p>
+                <% if reply.image.attached? %>
+                  <%= image_tag reply.image.variant(:display) %>
+                    <% end %>
+            <!-- Nút Reply -->
+            <div x-data="{ open: false }">
+                <button @click="open = !open" class="btn btn-link btn-sm text-blue-500">Reply</button>
+
+                <!-- Form trả lời bình luận -->
+                <div x-show="open" class="mt-2">
+                    <%= form_with(model: [reply.micropost, reply.replies.build], local: true) do |f| %>
+                    <%= f.hidden_field :parent_id, value: reply.id %>
+                    <div class="form-group">
+                        <%= f.text_area :content, placeholder: "Write a reply...", class: "form-control border border-gray-300 rounded-md p-2 w-full" %>
+                    </div>
+                    <span>
+                        <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+                    </span>
+                    <%= f.submit "Reply", class: "btn btn-primary btn-sm bg-blue-500 text-white px-4 py-2 rounded-md" %>
+                    <% end %>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+    <% end %>
+</div>
+
+<% end  %>

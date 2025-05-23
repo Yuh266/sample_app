@@ -1,9 +1,12 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  has_many :comments, dependent: :destroy
+
   has_one_attached :image do |attachable|
     attachable.variant :display, resize_to_limit: [500, 500]
   end
   default_scope -> { order(created_at: :desc) }
+  # unscoped loaij bor default_scope  ==> Micropost.unscoped.order(:id) 
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   
@@ -14,6 +17,5 @@ class Micropost < ApplicationRecord
                                   message: "should be less than 5MB" }
 
 end
-
 
 
