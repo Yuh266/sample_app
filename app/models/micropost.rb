@@ -32,10 +32,11 @@ class Micropost < ApplicationRecord
         else
           tagging.tag.name = tagging.tag.name.strip.downcase
         end
+      else
+        tagging.mark_for_destruction
       end
 
-       # Lúc này tagging.tag đã có ID hoặc sẽ được gán khi lưu
-      tag_name = tagging.tag.name  # dùng object_id tạm nếu chưa lưu
+      tag_name = tagging.tag.name 
       if seen_tag_names.include?(tag_name)
         tagging.mark_for_destruction
       else

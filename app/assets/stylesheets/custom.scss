@@ -475,3 +475,35 @@ span.image {
 .tag-suggestions li:hover {
   background-color: #f3f4f6;
 }
+// #tags-container {
+//   display: none; /* Ẩn container chứa các trường input động */
+// }
+#tags-container .tag-field:not(:first-child) {
+  display: none; /* Ẩn tất cả các trường nhập động trừ trường đầu tiên */
+}
+#selected-tags {
+  display: flex; /* Sử dụng flexbox để hiển thị các tags theo chiều ngang */
+  flex-wrap: wrap; /* Cho phép xuống dòng khi hết chiều ngang */
+  gap: 10px; /* Khoảng cách giữa các tags */
+  margin-top: 10px; /* Khoảng cách phía trên danh sách tags */
+}
+
+#selected-tags .tag-item {
+  display: inline-flex; /* Đảm bảo tag và nút xóa nằm trên cùng một dòng */
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  background-color: #f3f4f6; /* Màu nền cho tag */
+  border: 1px solid #ccc; /* Viền cho tag */
+  border-radius: 4px; /* Bo góc cho tag */
+  padding: 5px 10px; /* Khoảng cách bên trong tag */
+  font-size: 14px; /* Kích thước chữ */
+  color: #333; /* Màu chữ */
+}
+
+#selected-tags .remove-tag {
+  background: none; /* Xóa nền của nút xóa */
+  border: none; /* Xóa viền của nút xóa */
+  color: #ff0000; /* Màu đỏ cho nút xóa */
+  font-size: 16px; /* Kích thước chữ cho nút xóa */
+  margin-left: 5px; /* Khoảng cách giữa chữ tag và nút xóa */
+  cursor: pointer; /* Con trỏ chuột dạng pointer khi hover */
+}

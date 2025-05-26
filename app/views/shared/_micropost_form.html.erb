@@ -1,26 +1,30 @@
-<%= form_with(model: @micropost, local: true, data: { turbo: false}) do |f| %>
-<%= render 'shared/error_messages', object: f.object %>
-<div class="field">
+<%= form_with(model: @micropost, local: true, data: { turbo: false }) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost..." %>
-</div>
-<span>
+  </div>
+
+  <span>
     <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
-</span>
+  </span>
 
-<label for="tag-input" class="block text-sm font-medium text-gray-700">Tags :</label> 
-<button type="button" id="add-tag" class="btn btn-success">Add</button>
+  <label for="tag-input" class="block text-sm font-medium text-gray-700">Tags:</label>
+  
+  <!-- Thêm phần tử để hiển thị lỗi -->
+  <div id="tag-error" class="text-red-500 text-sm" style="margin-bottom: 10px;"></div>
 
-<div id="tags-container">
-  <%= f.fields_for :taggings do |tagging_form| %>
-    <div class="tag-field" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
-      <%= tagging_form.fields_for :tag do |tag_form| %>
-        <%= tag_form.text_field :name, class: "tag-input", placeholder: "Enter a tag" %>
-      <% end %>
-      <button type="button" class="remove-tag btn btn-danger">×</button>
-    </div>
-  <% end %>
-</div>
+  <div id="selected-tags" class="selected-tags"></div> <!-- Hiển thị các tags đã thêm -->
 
-<%= f.submit "Post", class: "btn btn-primary" %>
+  <div id="tags-container">
+    <%= f.fields_for :taggings do |tagging_form| %>
+      <div class="tag-field" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
+        <%= tagging_form.fields_for :tag do |tag_form| %>
+          <%= tag_form.text_field :name, class: "tag-input", placeholder: "Enter a tag" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
+  <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>

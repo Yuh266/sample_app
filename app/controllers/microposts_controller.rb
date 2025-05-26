@@ -14,7 +14,7 @@ class MicropostsController < ApplicationController
       render 'static_pages/home', status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     @micropost.destroy
     flash[:success] = "Micropost deleted"
