@@ -1,0 +1,11 @@
+<!-- filepath: /home/huy/Rails/sample_app/app/views/tags/show.html.erb -->
+<h1>Posts tagged with "<%= @tag.name %>"</h1>
+
+<% if @microposts.any? %>
+  <ul class="microposts">
+    <%= render @microposts %>
+  </ul>
+  <%= will_paginate @microposts %>
+<% else %>
+  <p>No posts found for this tag.</p>
+<% end %>

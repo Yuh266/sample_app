@@ -30,7 +30,13 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:content)
+    params.require(:micropost).permit(
+      :content, :image,
+      taggings_attributes: [
+        :id, :_destroy,
+        tag_attributes: [:name]
+      ]
+    )
   end
   
   def correct_user

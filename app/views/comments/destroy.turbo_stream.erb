@@ -1,1 +1,5 @@
+<% if @comment.parent_id.nil? %>
 <%= turbo_stream.remove dom_id(@comment) %>
+<% else %>
+<%= turbo_stream.remove "reply_#{@comment.id}" %>
+<% end %>

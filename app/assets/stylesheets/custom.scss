@@ -326,3 +326,152 @@ span.image {
   font-size: 0.875rem;
   color: #6b7280;
 }
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống dòng khi hết chiều rộng */
+  gap: 0.5rem; /* Khoảng cách giữa các tags */
+}
+
+.tag-item {
+  background-color: #f3f4f6; /* Màu nền nhạt */
+  color: #1f2937; /* Màu chữ */
+  padding: 0.5rem 1rem; /* Khoảng cách bên trong */
+  border-radius: 9999px; /* Bo tròn */
+  font-size: 0.875rem; /* Kích thước chữ */
+  white-space: nowrap; /* Không cho phép xuống dòng trong tag */
+}
+
+#tag-container {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống dòng khi hết chiều rộng */
+  gap: 1rem; /* Khoảng cách giữa các thẻ */
+  padding: 1rem; /* Thêm khoảng cách bên trong container */
+  background-color: #f9fafb; /* Màu nền nhạt cho container */
+  border: 1px solid #e5e7eb; /* Đường viền nhạt */
+  border-radius: 0.5rem; /* Bo tròn container */
+}
+
+#tag-container .tag-item {
+  background-color: white; /* Màu nền trắng cho thẻ */
+  color: #1f2937; /* Màu chữ */
+  padding: 1rem; /* Khoảng cách bên trong thẻ */
+  border: 1px solid #e5e7eb; /* Đường viền nhạt */
+  border-radius: 0.5rem; /* Bo tròn thẻ */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  display: flex; /* Hiển thị nội dung thẻ theo hàng ngang */
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  gap: 0.5rem; /* Khoảng cách giữa tên tag và nút xóa */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hiệu ứng hover */
+}
+
+#tag-container .tag-item:hover {
+  transform: translateY(-2px); /* Di chuyển nhẹ lên trên khi hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Tăng hiệu ứng đổ bóng khi hover */
+}
+
+#tag-container .tag-name {
+  font-size: 1rem; /* Kích thước chữ */
+  font-weight: 500; /* Đậm vừa */
+}
+
+#tag-container .tag-remove {
+  background-color: #ef4444; /* Màu nền nút xóa */
+  color: white; /* Màu chữ nút xóa */
+  border: none;
+  border-radius: 50%; /* Bo tròn nút xóa */
+  width: 1.5rem; /* Kích thước nút xóa */
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hiệu ứng hover */
+}
+
+#tag-container .tag-remove:hover {
+  background-color: #dc2626; /* Màu nền khi hover */
+}
+
+#tag-suggestions {
+  position: absolute;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#tag-suggestions li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#tag-suggestions li:hover {
+  background-color: #f3f4f6;
+}
+
+
+/* filepath: /home/huy/Rails/sample_app/app/assets/stylesheets/custom.scss */
+
+.tag-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.tag-input {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.remove-tag {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.remove-tag:hover {
+  background-color: #c82333;
+}
+
+#add-tag {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#add-tag:hover {
+  background-color: #218838;
+}
+.tag-suggestions {
+  position: absolute;
+  z-index: 1000;
+  max-height: 200px; /* Đặt chiều cao tối đa để tránh tràn */
+  overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tag-suggestions li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.tag-suggestions li:hover {
+  background-color: #f3f4f6;
+}

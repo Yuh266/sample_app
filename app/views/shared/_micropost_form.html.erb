@@ -1,14 +1,26 @@
-<%= form_with(model: @micropost) do |f| %>
+<%= form_with(model: @micropost, local: true, data: { turbo: false}) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost..." %>
 </div>
-<%= f.submit "Post", class: "btn btn-primary" %>
 <span>
     <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
 </span>
+
+<label for="tag-input" class="block text-sm font-medium text-gray-700">Tags :</label> 
+<button type="button" id="add-tag" class="btn btn-success">Add</button>
+
+<div id="tags-container">
+  <%= f.fields_for :taggings do |tagging_form| %>
+    <div class="tag-field" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
+      <%= tagging_form.fields_for :tag do |tag_form| %>
+        <%= tag_form.text_field :name, class: "tag-input", placeholder: "Enter a tag" %>
+      <% end %>
+      <button type="button" class="remove-tag btn btn-danger">×</button>
+    </div>
+  <% end %>
+</div>
+
+<%= f.submit "Post", class: "btn btn-primary" %>
+
 <% end %>
-
-
-
-

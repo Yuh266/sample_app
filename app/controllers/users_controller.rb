@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])
     redirect_to root_url and return unless @user.activated?
   end
-
+  
   def create
     @user = User.new(user_params) 
     if @user.save 

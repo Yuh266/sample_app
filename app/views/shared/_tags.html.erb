@@ -1,0 +1,6 @@
+<!-- filepath: /home/huy/Rails/sample_app/app/views/shared/_tags.html.erb -->
+<div class="tags-container">
+  <% @micropost.tags.each do |tag| %>
+    <span class="tag-item"><%= tag.name %></span>
+  <% end %>
+</div>
