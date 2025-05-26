@@ -394,24 +394,29 @@ span.image {
 }
 
 #tag-suggestions {
-  position: absolute;
-  z-index: 10;
-  max-height: 200px;
-  overflow-y: auto;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Đảm bảo danh sách gợi ý được định vị tương đối với cha */
+  top: 100%; /* Đặt danh sách ngay bên dưới trường nhập */
+  left: 0; /* Căn trái với trường nhập */
+  background-color: white; /* Màu nền trắng */
+  border: 1px solid #ccc; /* Viền */
+  border-radius: 4px; /* Bo góc */
+  list-style: none; /* Xóa dấu đầu dòng */
+  padding: 0; /* Xóa padding mặc định */
+  margin: 0; /* Xóa margin mặc định */
+  width: 100%; /* Đảm bảo danh sách gợi ý có cùng chiều rộng với trường nhập */
+  z-index: 1050; /* Đảm bảo danh sách gợi ý nằm trên các phần tử khác */
+  max-height: 200px; /* Giới hạn chiều cao danh sách gợi ý */
+  overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
 }
 
 #tag-suggestions li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+  padding: 0.5rem; /* Khoảng cách bên trong mỗi mục */
+  cursor: pointer; /* Con trỏ chuột dạng pointer khi hover */
 }
 
 #tag-suggestions li:hover {
-  background-color: #f3f4f6;
+  background-color: #f3f4f6; /* Màu nền khi hover */
 }
 
 
@@ -457,23 +462,28 @@ span.image {
   background-color: #218838;
 }
 .tag-suggestions {
-  position: absolute;
-  z-index: 1000;
-  max-height: 200px; /* Đặt chiều cao tối đa để tránh tràn */
+  position: absolute; /* Đảm bảo danh sách gợi ý được định vị tương đối với cha */
+  top: 100%; /* Đặt danh sách ngay bên dưới trường nhập */
+  left: 0; /* Căn trái với trường nhập */
+  background-color: white; /* Màu nền trắng */
+  border: 1px solid #ccc; /* Viền */
+  border-radius: 4px; /* Bo góc */
+  list-style: none; /* Xóa dấu đầu dòng */
+  padding: 0; /* Xóa padding mặc định */
+  margin: 0; /* Xóa margin mặc định */
+  width: 100%; /* Đảm bảo danh sách gợi ý có cùng chiều rộng với trường nhập */
+  z-index: 1050; /* Đảm bảo danh sách gợi ý nằm trên các phần tử khác */
+  max-height: 200px; /* Giới hạn chiều cao danh sách gợi ý */
   overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tag-suggestions li {
-  padding: 0.5rem;
-  cursor: pointer;
+  padding: 0.5rem; /* Khoảng cách bên trong mỗi mục */
+  cursor: pointer; /* Con trỏ chuột dạng pointer khi hover */
 }
 
 .tag-suggestions li:hover {
-  background-color: #f3f4f6;
+  background-color: #f3f4f6; /* Màu nền khi hover */
 }
 // #tags-container {
 //   display: none; /* Ẩn container chứa các trường input động */

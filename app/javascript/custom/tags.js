@@ -83,4 +83,48 @@ document.addEventListener("turbo:load", () => {
       }
     }
   });
+
+  const tagInput = document.querySelector(".tag-input");
+  const tagSuggestions = document.createElement("ul");
+  tagSuggestions.className = "tag-suggestions";
+
+  if (!tagInput) return;
+
+  // Đảm bảo cha của tagInput có position: relative
+  tagInput.parentNode.style.position = "relative";
+  tagInput.parentNode.appendChild(tagSuggestions);
+
+  tagInput.addEventListener("input", async (e) => {
+    const query = e.target.value.trim();
+    if (query.length === 0) {
+      tagSuggestions.innerHTML = "";
+      return;
+    }
+
+    try {
+      const response = await fetch(`/tags/search?q=${encodeURIComponent(query)}`);
+      if (!response.ok) throw new Error("Failed to fetch tags");
+      const tags = await response.json();
+
+      tagSuggestions.innerHTML = "";
+      tags.forEach((tag) => {
+        const suggestionItem = document.createElement("li");
+        suggestionItem.textContent = tag;
+        suggestionItem.addEventListener("click", () => {
+          tagInput.value = tag; // Gán giá trị tag vào input
+          tagSuggestions.innerHTML = ""; // Xóa danh sách gợi ý
+        });
+
+        tagSuggestions.appendChild(suggestionItem);
+      });
+    } catch (error) {
+      console.error("Error fetching tags:", error);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!tagSuggestions.contains(e.target) && e.target !== tagInput) {
+      tagSuggestions.innerHTML = ""; // Ẩn danh sách gợi ý khi click ra ngoài
+    }
+  });
 });
