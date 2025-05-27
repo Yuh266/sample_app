@@ -6,9 +6,14 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
     
+
     if @micropost.save
-      flash[:success] = "Micropost created!"
-      redirect_to root_url
+      
+      ActionCable.server.broadcast "microposts_channel", {
+        html: render_to_string(partial: "microposts/micropost", locals: { micropost: @micropost })
+      }
+      head :ok 
+      return
     else 
       @feed_items = current_user.feed.order(id: :desc).paginate(page: params[:page])
       render 'static_pages/home', status: :unprocessable_entity
@@ -17,9 +22,12 @@ class MicropostsController < ApplicationController
   
   def destroy
     @micropost.destroy
-    flash[:success] = "Micropost deleted"
     
-    redirect_back_or_to(root_url)
+    ActionCable.server.broadcast "microposts_channel", {
+      action: "destroy",
+      micropost_id: @micropost.id
+    }
+    # redirect_back_or_to(root_url)
     # if request.referrer.nil?
       # redirect_to root_url, status: :see_other
     # else

@@ -5,3 +5,4 @@ import "custom/menu"
 import "custom/image_upload"
 import "./custom/tags"
 
+import "channels"

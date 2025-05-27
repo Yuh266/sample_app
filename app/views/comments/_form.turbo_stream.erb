@@ -1,0 +1,9 @@
+<%= form_with(model: [micropost, comment], id: "comment_form_#{micropost.id}") do |f| %>
+  <div class="form-group">
+    <%= f.text_area :content, placeholder: "Add a comment...", class: "form-control" %>
+  </div>
+  <span>
+    <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+  </span>
+  <%= f.submit "Comment", class: "btn btn-primary btn-sm" %>
+<% end %>

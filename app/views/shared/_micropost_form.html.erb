@@ -1,4 +1,4 @@
-<%= form_with(model: @micropost, local: true, data: { turbo: false }) do |f| %>
+<%= form_with(model: micropost, id: "micropost_form", data: { turbo: true }) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <div class="field">
@@ -11,16 +11,15 @@
 
   <label for="tag-input" class="block text-sm font-medium text-gray-700">Tags:</label>
   
-  <!-- Thêm phần tử để hiển thị lỗi -->
-  <div id="tag-error" class="text-red-500 text-sm" style="margin-bottom: 10px;"></div>
+    <div id="tag-error" class="text-red-500 text-sm" style="margin-bottom: 10px;"></div>
 
-  <div id="selected-tags" class="selected-tags"></div> <!-- Hiển thị các tags đã thêm -->
+  <div id="selected-tags" class="selected-tags"></div>
 
   <div id="tags-container">
     <%= f.fields_for :taggings do |tagging_form| %>
       <div class="tag-field" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
         <%= tagging_form.fields_for :tag do |tag_form| %>
-          <%= tag_form.text_field :name, class: "tag-input", placeholder: "Enter a tag" %>
+          <%= tag_form.text_field :name, class: "tag-input", placeholder: "Enter a tag", value: "" %>
         <% end %>
       </div>
     <% end %>

@@ -3,7 +3,9 @@
 <div id="comments-<%= comment.id %>">
 
     <div id="<%= dom_id(comment) %>" class="comment">
+    <% if comment.user %>
         <strong><%= link_to comment.user.name, comment.user %></strong> |
+    <% end %>
         <% if current_user?(comment.user) || current_user.admin? %>
         <%= link_to "delete", [comment.micropost, comment], data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
         <% end %>
