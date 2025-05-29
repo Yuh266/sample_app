@@ -31,9 +31,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy] 
   end
   resources :relationships, only: [:create, :destroy]
-    resources :tags, only: [:index, :show] do
+  resources :tags, only: [:index, :show] do
     collection do
-      get :search # Endpoint để tìm kiếm tags
+      get :search
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
