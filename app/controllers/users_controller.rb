@@ -64,7 +64,6 @@ class UsersController < ApplicationController
   end
 
   private
-  # Confirms an admin user.
   def admin_user
     redirect_to (root_ url, status: :see_other) unless current_user.admin?
   end
@@ -79,5 +78,7 @@ class UsersController < ApplicationController
   end
 
 end
+
+
 
 
