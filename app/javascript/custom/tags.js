@@ -146,3 +146,4 @@ document.addEventListener("turbo:submit-end", (event) => {
     
   }
 });
+

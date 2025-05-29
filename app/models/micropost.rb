@@ -3,7 +3,9 @@ class Micropost < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+
   accepts_nested_attributes_for :taggings, allow_destroy: true
+
   has_one_attached :image do |attachable|
     attachable.variant :display, resize_to_limit: [500, 500]
   end
@@ -16,8 +18,6 @@ class Micropost < ApplicationRecord
                                     message: "must be a valid image format" },
                     size: { less_than: 5.megabytes,
                             message: "should be less than 5MB" }
-
-            
   before_validation :assign_existing_or_new_tags
 
   private

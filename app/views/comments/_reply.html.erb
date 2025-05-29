@@ -14,11 +14,8 @@
     <!-- Nút Reply -->
     <div x-data="{ open: false }">
         <button @click="open = !open" class="btn btn-link btn-sm text-blue-500">Reply</button>
-
-        <!-- Form trả lời bình luận -->
         <div x-show="open" class="mt-2">
             <%= render partial: "comments/form_child", locals: { comment: reply } %>
         </div>
-        
     </div>
 </div>

@@ -8,6 +8,7 @@
     <%= image_tag micropost.image.variant(:display) %>
     <% end %>
     </span>
+
     <span class="tags">
     Tags: <%= micropost.tags.map { |tag| link_to tag.name, tag_path(tag) }.join(", ").html_safe %>
     </span>
@@ -18,14 +19,13 @@
         <% end %> 
     </span>
 
-<div class="comments">
-  <h5>Comments</h5>
-  <div id="comments_<%= micropost.id %>">
-    <%= render micropost.comments %>
+  <div class="comments">
+    <h5>Comments</h5>
+    <div id="comments_<%= micropost.id %>">
+      <%= render micropost.comments %>
+    </div>
+    <%= render partial: "comments/form", locals: { micropost: micropost, comment: micropost.comments.build } %>
   </div>
-  <%= render partial: "comments/form", locals: { micropost: micropost, comment: micropost.comments.build } %>
-</div>
-
 </li>
 
 

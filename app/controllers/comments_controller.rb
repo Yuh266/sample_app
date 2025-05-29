@@ -14,13 +14,10 @@ class CommentsController < ApplicationController
         format.html { redirect_to micropost_path(@micropost), notice: "Comment added!" }
       end
     else
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "comments/form", locals: { micropost: @micropost, comment: @comment }) }
-        format.html { redirect_to micropost_path(@micropost), alert: "Comment could not be added." }
-      end
+      redirect_to root_path, alert: "Error adding comment. Please try again."
     end
   end
-
+  
   def destroy
     @comment = Comment.find(params[:id])
     if @comment.user == current_user || current_user.admin?

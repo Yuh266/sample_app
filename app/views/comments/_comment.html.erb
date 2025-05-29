@@ -1,11 +1,9 @@
-<% if comment.parent_id.nil? %>
+<% if comment.parent_id.nil? && comment.user  %>
 
 <div id="comments-<%= comment.id %>">
 
     <div id="<%= dom_id(comment) %>" class="comment">
-    <% if comment.user %>
         <strong><%= link_to comment.user.name, comment.user %></strong> |
-    <% end %>
         <% if current_user?(comment.user) || current_user.admin? %>
         <%= link_to "delete", [comment.micropost, comment], data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
         <% end %>
@@ -31,9 +29,7 @@
                 <span x-show="showReplies">Ẩn bình luận</span>
             </button>
             <div id="replies_<%= comment.id %>" x-show="showReplies" class="ml-4 border-l-2 border-gray-300 pl-4">
-                <% comment.big_replies.each do |reply| %>
-                <%= render partial: "comments/reply", locals: { reply: reply } %>
-                <% end %>
+                <% render comment.big_replies %>
             </div>
 
         </div>

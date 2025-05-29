@@ -1,5 +1,4 @@
 <%= turbo_stream.prepend "microposts", partial: "microposts/micropost", locals: { micropost: @micropost } %>
-
  <%= turbo_stream.update "number_microposts" do %>
     <%= pluralize(current_user.microposts.count, "micropost")%>
 <% end %>
