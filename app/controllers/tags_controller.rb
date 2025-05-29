@@ -10,8 +10,8 @@ class TagsController < ApplicationController
 
   def search
     query = params[:q].to_s.strip.downcase
-    @tags = Tag.where("LOWER(name) LIKE ?", "#{query}%").limit(5) # Tìm kiếm và giới hạn 5 kết quả
-    render json: @tags.pluck(:name) # Trả về danh sách tên tags dưới dạng JSON
+    @tags = Tag.where("LOWER(name) LIKE ?", "#{query}%").limit(5) 
+    render json: @tags.pluck(:name)
   end
   
 end
