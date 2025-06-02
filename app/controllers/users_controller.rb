@@ -34,12 +34,9 @@ class UsersController < ApplicationController
   def update 
     @user = User.find(params[:id])
     if @user.update(user_params)
-      # Xử lý khi cập nhật thành công
       flash[:success] = "Profile updated"
-      # redirect_to @user
       redirect_to edit_user_path(@user), status: :see_other
     else
-      # Nếu thông tin không hợp lệ, trả về trang chỉnh sửa với thông báo lỗi
       render 'edit', status: :unprocessable_entity
     end
   end
@@ -53,7 +50,7 @@ class UsersController < ApplicationController
     @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page]) 
-    # Rails.logger.debug { "DEBUG: @users = #{@users.inspect}" } # Ghi log
+
     render 'show_follow', status: :unprocessable_entity
   end 
   def followers 
