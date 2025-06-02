@@ -4,7 +4,6 @@ class Comment < ApplicationRecord
   
   belongs_to :parent, class_name: "Comment", optional: true
   has_many :replies, class_name: "Comment", foreign_key: "parent_id", dependent: :destroy
-
   has_many :big_replies, class_name: "Comment", foreign_key: "big_parent_id", dependent: :destroy
 
   has_one_attached :image do |attachable|
@@ -26,9 +25,6 @@ class Comment < ApplicationRecord
       self.big_parent_id = id
     else
       self.big_parent_id = parent&.big_parent_id || parent_id
-      # parent&.big_parent_id
-      # parent_comment = Comment.find_by(id: parent_id) 
-      # self.big_parent_id = parent_comment ? parent_comment.big_parent_id : parent_id
     end
   end
 end
